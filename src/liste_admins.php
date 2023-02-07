@@ -1,27 +1,38 @@
 <?php
+session_start();
+include_once '../config.inc.php';
 
 if (isset($_POST['delete_admin_username'])) {
     $deleteUsername = (string)$_POST['delete_admin_username'];
-    $delete = delete("DELETE FROM admin WHERE username = ?", [$deleteUsername]);
+    delete("DELETE FROM admin WHERE username = ?", [$deleteUsername]);
 }
 
 if (isset($_POST['update_admin_username']) && isset($_POST['update_admin_password'])) {
     $updatedUsername = (string)$_POST['updated_admin_username'];
     $updateUsername = (string)$_POST['update_admin_username'];
     $updatePassword = (string)$_POST['update_admin_password'];
-    $update = update("UPDATE admin SET username = ?, password = ? WHERE username = ?", [$updateUsername, $updatePassword, $updatedUsername]);
+    update("UPDATE admin SET username = ?, password = ? WHERE username = ?", [$updateUsername, $updatePassword, $updatedUsername]);
 }
 
 if (isset($_POST['new_admin_username']) && isset($_POST['new_admin_password'])) {
     $newUsername = (string)$_POST['new_admin_username'];
     $newPassword = (string)$_POST['new_admin_password'];
-    $insert = insert("INSERT INTO admin (username, password) VALUES (?, ?)", [$newUsername, $newPassword]);
+    insert("INSERT INTO admin (username, password) VALUES (?, ?)", [$newUsername, $newPassword]);
 }
 
 $admins = select('SELECT * FROM admin', []);
 ?>
 
-<h2>Admins</h2>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<h1>Admins</h1>
+<h3><a href="admin.php">Retour à l'administration</a></h3>
 
 <form action="" method="post">
     <input required placeholder="Username" type="text" name="new_admin_username">
@@ -59,3 +70,5 @@ $admins = select('SELECT * FROM admin', []);
     <?php endforeach; ?>
     </tbody>
 </table>
+</body>
+</html>

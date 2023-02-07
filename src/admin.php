@@ -25,6 +25,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
     }
 }
 
+$compte_themes = select('SELECT * FROM theme', []);
+$compte_inscrits = select('SELECT * FROM inscription', []);
+
 ?>
 
 <html>
@@ -37,14 +40,12 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
 <body>
 
 <h1>Administration</h1>
-<form action="deconnexion.php">
-    <button type="submit">Déconnexion</button>
-</form>
+<h3><?php echo $_SESSION['username'] ?> <a href="deconnexion.php">Déconnexion</a></h3>
 
 <div style="display:flex; gap: 2rem">
-    <div><?php include_once 'liste_inscrits.php' ?></div>
-    <div><?php include_once 'liste_theme.php' ?></div>
-    <div><?php include_once 'liste_admins.php' ?></div>
+    <h4><a href="liste_inscrits.php"><?php echo sizeof($compte_inscrits) ?> inscrits</a></h4>
+    <h4><a href="liste_theme.php"><?php echo sizeof($compte_themes) ?> thèmes</a></h4>
+    <h4><a href="liste_admins.php">Gestion des administrateurs</a></h4>
 </div>
 
 </body>

@@ -1,25 +1,37 @@
 <?php
+session_start();
+include_once '../config.inc.php';
 
 if (isset($_POST['delete_theme_id'])) {
     $id = (int)$_POST['delete_theme_id'];
-    $delete = delete("DELETE FROM theme WHERE id = ?", [$id]);
+    delete("DELETE FROM theme_inscription WHERE theme_id = ?", [$id]);
+    delete("DELETE FROM theme WHERE id = ?", [$id]);
 }
 
 if (isset($_POST['new_theme'])) {
     $new_theme = (string)$_POST['new_theme'];
-    $insert = insert("INSERT INTO theme (label) VALUES (?)", [$new_theme]);
+    insert("INSERT INTO theme (label) VALUES (?)", [$new_theme]);
 }
 
 if (isset($_POST['update_theme_id'])) {
     $id = (int)$_POST['update_theme_id'];
     $label = (string)$_POST['update_theme_label'];
-    $update = update("UPDATE theme SET label = ? WHERE id = ?", [$label, $id]);
+    update("UPDATE theme SET label = ? WHERE id = ?", [$label, $id]);
 }
 
 $themes = select('SELECT * FROM theme', []);
 ?>
 
-<h2>Themes</h2>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<h1>Themes</h1>
+<h3><a href="admin.php">Retour à l'administration</a></h3>
 
 <form action="" method="post">
     <input required placeholder="Theme" type="text" name="new_theme">
@@ -55,3 +67,5 @@ $themes = select('SELECT * FROM theme', []);
     <?php endforeach; ?>
     </tbody>
 </table>
+</body>
+</html>

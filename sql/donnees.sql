@@ -3,7 +3,7 @@ VALUES ('leoh', '11102002');
 
 INSERT INTO inscription (id, email)
 VALUES (1, 'leo.hugonnot@gmail.com'),
-       (2, 'leo.hugonnot@edu.univ-fcomte.fr'),
+       (2, 'arthur.dubois@edu.univ-fcomte.fr'),
        (3, 'leo.hugonnot@kalico-informatique.fr');
 
 INSERT INTO theme (id, label)

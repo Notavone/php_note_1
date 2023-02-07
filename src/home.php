@@ -39,34 +39,43 @@ if (isset($_POST['inscrit_mail']) || isset($_SESSION['inscrit_email'])) {
 </head>
 <body>
 
-<div style="display: flex; gap: 1rem">
+<div>
     <form action="/src/admin.php" method="post">
         <input required placeholder="Username" type="text" name="username">
         <input required placeholder="Password" type="password" name="password">
         <button type="submit">Login</button>
     </form>
-
-    <span>OU</span>
-
-    <form action="" method="post">
-        <input required placeholder="Email" type="text" name="inscrit_mail">
-        <button type="submit">Voir mes adhésions</button>
-    </form>
 </div>
 
+<?php if (!isset($_SESSION['inscrit_email'])): ?>
+    <div>
+        <form action="" method="post">
+            <input required placeholder="Email" type="text" name="inscrit_mail">
+            <button type="submit">Voir mes adhésions</button>
+        </form>
+    </div>
+<?php else: ?>
+    <div>
+        <span><?php echo $_SESSION['inscrit_email'] ?></span>
+        <a href="deconnexion.php">Déconnexion</a>
+    </div>
+<?php endif; ?>
 
+<h1>Thèmes</h1>
 <form action="maj_adhesions.php" method="get">
     <div style="display:flex; gap: 1rem">
         <?php foreach ($themes as $theme): ?>
             <div>
                 <h2>
-                    <?php echo $theme['label'] ?>
-                    <?php if (isset($_SESSION['inscrit_email'])): ?>
-                        <input type="checkbox"
-                               name="<?php echo 'check_' . $theme['id'] ?>"
-                            <?php echo in_array($theme['id'], $inscriptions_ids) ? 'checked' : '' ?>
-                        >
-                    <?php endif; ?>
+                    <label>
+                        <?php echo $theme['label'] ?>
+                        <?php if (isset($_SESSION['inscrit_email'])): ?>
+                            <input type="checkbox"
+                                   name="<?php echo 'check_' . $theme['id'] ?>"
+                                <?php echo in_array($theme['id'], $inscriptions_ids) ? 'checked' : '' ?>
+                            >
+                        <?php endif; ?>
+                    </label>
                 </h2>
             </div>
         <?php endforeach; ?>
